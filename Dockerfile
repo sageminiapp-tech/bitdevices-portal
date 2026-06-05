@@ -1,15 +1,16 @@
-FROM php:8.2-apache
+FROM php:8.2-cli
 
 # Install PDO MySQL extension
 RUN docker-php-ext-install pdo_mysql
 
-# Enable Apache mod_rewrite for .htaccess
-RUN a2enmod rewrite
+# Set working directory
+WORKDIR /app
 
 # Copy application files
-COPY . /var/www/html
+COPY . .
 
-# Set proper permissions
-RUN chown -R www-data:www-data /var/www/html
+# Expose port
+EXPOSE 8080
 
-EXPOSE 80
+# Start PHP built-in server (matching your Procfile)
+CMD ["php", "-S", "0.0.0.0:8080"]
