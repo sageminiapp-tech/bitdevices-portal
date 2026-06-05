@@ -9,8 +9,12 @@ WORKDIR /app
 # Copy application files
 COPY . .
 
+# Copy entrypoint script
+COPY entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
+
 # Expose port
 EXPOSE 8080
 
-# Start PHP built-in server (matching your Procfile)
-CMD ["php", "-S", "0.0.0.0:8080"]
+# Use entrypoint to handle environment variables
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
