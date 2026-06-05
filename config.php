@@ -4,7 +4,7 @@
 
 $host = $_ENV['mysql.railway.internal'];
 $user = $_ENV['root'];
-$pass = $_ENV['QOAqmBOQaennStCjGqNNySpLZYezvFus'];
+$pass = $_ENV['NuyKmWtdCkIosUAJWDBnspwjdSrnuLEw'];
 $name = $_ENV['railway'];
 
 define('DB_HOST', $host);
