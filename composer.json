@@ -1,0 +1,7 @@
+{
+  "name": "bitdevices/portal",
+  "description": "Device Registration Portal",
+  "require": {
+    "php": "^7.2"
+  }
+}
