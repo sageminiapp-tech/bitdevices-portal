@@ -1,1 +1,2 @@
-web: php -S 0.0.0.0:${PORT:-8080}
+# This file has been replaced by Dockerfile configuration
+# See Dockerfile and entrypoint.sh for deployment setup
