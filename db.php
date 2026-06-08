@@ -18,6 +18,11 @@ function db(): PDO {
         PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
         PDO::ATTR_EMULATE_PREPARES => false,
     ]);
+
+    
+// Force MySQL session time zone to South Africa (UTC+2)
+    $pdo->exec("SET time_zone = '+02:00'");
+
     return $pdo;
 }
 
