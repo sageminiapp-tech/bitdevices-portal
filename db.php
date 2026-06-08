@@ -1,11 +1,12 @@
 <?php
 require_once __DIR__ . '/config.php';
 
+function db(): PDO {
+
 error_log('MYSQLHOST=' . var_export(getenv('MYSQLHOST'), true));
 error_log('MYSQLPORT=' . var_export(getenv('MYSQLPORT'), true));
 error_log('MYSQLUSER=' . var_export(getenv('MYSQLUSER'), true));
 error_log('MYSQLDATABASE=' . var_export(getenv('MYSQLDATABASE'), true));
-function db(): PDO {
     static $pdo = null;
     if ($pdo instanceof PDO) {
         return $pdo;
