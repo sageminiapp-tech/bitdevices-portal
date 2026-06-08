@@ -76,7 +76,7 @@ $onlineCount = count(array_filter($devices, fn($d)=>is_device_online($d['last_se
       <div class="card-body">
         <div class="d-flex align-items-center">
           <div class="flex-grow-1">
-            <div class="text-secondary small mb-2"><i class="fas fa-wifi me-2"></i>Online Now</div>
+            <div class="text-secondary small mb-2"><i class="fas fa-wifi me-2"></i>Online Today</div>
             <div class="display-6"><?= $onlineCount ?></div>
           </div>
           <div class="text-center" style="font-size: 2.5rem; opacity: 0.1; margin-left: 1rem;">
