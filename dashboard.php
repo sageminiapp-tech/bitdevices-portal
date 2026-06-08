@@ -130,54 +130,56 @@ $onlineCount = count(array_filter($devices, fn($d)=>is_device_online($d['last_se
           <th class="text-center">Action</th>
         </tr>
       </thead>
-      <tbody>
-      <?php if (!$devices): ?>
-        <tr><td colspan="<?= is_admin() ? '12' : '11' ?>" class="text-center text-primary py-5">
-          <div><i class="fas fa-inbox fa-3x mb-3" style="opacity: 0.3;"></i></div>
-          <div>No devices found.</div>
-        </td></tr>
-      <?php endif; ?>
-      <?php foreach ($devices as $d):
-          $online = is_device_online($d['last_seen'] ?? null);
-          $fw = $d['fw_version'] ?? '';
-          $update = ($latestVersion && $fw && version_compare($fw, $latestVersion, '<')) ? 'Available' : 'Current';
-      ?>
+      <tbody> 
+    <?php if (!$devices): ?> 
         <tr>
-          <td><code><?= h($d['imei']) ?></code></td>
-		  <td><code><?= h($d['iccid']) ?></code></td>
-          <td><code><?= h($d['chipid']) ?></code></td>
-          <?php if (is_admin()): ?><td><?= h((string)($d['owner_user_id'] ?? 'unclaimed')) ?></td><?php endif; ?>
-          <td>
-            <span class="badge rounded-pill <?= $online ? 'badge-online' : 'badge-offline' ?>" style="<?= $online ? 'background: linear-gradient(135deg, #00d9ff, #00a8cc); color: var(--primary-dark);' : 'background: linear-gradient(135deg, #ec4899, #be185d); color: white;' ?>">
-              <i class="fas fa-circle fa-xs me-1"></i><?= $online ? 'Online' : 'Offline' ?>
-            </span>
-          </td>
-          <td><span style="font-family: 'Space Mono', monospace; color: var(--accent-cyan);"><?= h($fw ?: 'n/a') ?></span></td>
-          <td>
-            <span class="badge rounded-pill" style="<?= $update === 'Available' ? 'background: linear-gradient(135deg, #fbbf24, #f59e0b); color: #000;' : 'background: linear-gradient(135deg, #10b981, #059669); color: white;' ?>">
-              <i class="fas fa-<?= $update === 'Available' ? 'cloud-download-alt' : 'check-circle' ?> me-1"></i><?= h($update) ?>
-            </span>
-          </td>
-          <td>
-            <small><?= h(($d['gsm_operator'] ?: '—') . ' / ' . ($d['gsm_rssi'] ?? 'n/a')) ?></small>
-          </td>
-          <td>
-            <small><?= h($d['wifi_ssid'] ?: '—') ?></small>
-          </td>
-          <td>
-            <small><?= h($d['battery_v'] !== null ? number_format((float)$d['battery_v'], 2) . 'V' : '—') ?></small>
-          </td>
-          <td>
-            <small><?= h($d['last_seen'] ?: 'never') ?></small>
-          </td>
-          <td class="text-center">
-            <a class="btn btn-sm btn-outline-primary" href="<?= APP_BASE ?>/device.php?imei=<?= urlencode($d['imei']) ?>" style="border: 1px solid var(--glass-border); color: var(--accent-cyan);">
-              <i class="fas fa-arrow-right me-1"></i>View
-            </a>
-          </td>
-        </tr>
-      <?php endforeach; ?>
-      </tbody>
+            <!-- Changed 'text-primary' to 'text-dark' for black text -->
+            <td colspan="<?= is_admin() ? '12' : '11' ?>" class="text-center text-dark py-5"> 
+                <div><i class="fas fa-inbox fa-3x mb-3" style="opacity: 0.3; color: #000;"></i></div> 
+                <div>No devices found.</div> 
+            </td>
+        </tr> 
+    <?php endif; ?> 
+
+    <?php foreach ($devices as $d): 
+        $online = is_device_online($d['last_seen'] ?? null); 
+        $fw = $d['fw_version'] ?? ''; 
+        $update = ($latestVersion && $fw && version_compare($fw, $latestVersion, '<')) ? 'Available' : 'Current'; 
+    ?> 
+        <!-- Added Bootstrap text-dark class to the row to ensure general text defaults to black -->
+        <tr class="text-dark"> 
+            <td><code style="color: #000;"><?= h($d['imei']) ?></code></td> 
+            <td><code style="color: #000;"><?= h($d['iccid']) ?></code></td> 
+            <td><code style="color: #000;"><?= h($d['chipid']) ?></code></td> 
+            <?php if (is_admin()): ?><td><?= h((string)($d['owner_user_id'] ?? 'unclaimed')) ?></td><?php endif; ?> 
+            <td> 
+                <!-- Changed badge text color to #000 -->
+                <span class="badge rounded-pill <?= $online ? 'badge-online' : 'badge-offline' ?>" style="<?= $online ? 'background: linear-gradient(135deg, #00d9ff, #00a8cc); color: #000;' : 'background: linear-gradient(135deg, #ec4899, #be185d); color: #000;' ?>"> 
+                    <i class="fas fa-circle fa-xs me-1"></i><?= $online ? 'Online' : 'Offline' ?> 
+                </span> 
+            </td> 
+            <!-- Changed color from var(--accent-cyan) to #000 -->
+            <td><span style="font-family: 'Space Mono', monospace; color: #000;"><?= h($fw ?: 'n/a') ?></span></td> 
+            <td> 
+                <!-- Changed badge text color to #000 for both conditions -->
+                <span class="badge rounded-pill" style="<?= $update === 'Available' ? 'background: linear-gradient(135deg, #fbbf24, #f59e0b); color: #000;' : 'background: linear-gradient(135deg, #10b981, #059669); color: #000;' ?>"> 
+                    <i class="fas fa-<?= $update === 'Available' ? 'cloud-download-alt' : 'check-circle' ?> me-1"></i><?= h($update) ?> 
+                </span> 
+            </td> 
+            <td> <small><?= h(($d['gsm_operator'] ?: '—') . ' / ' . ($d['gsm_rssi'] ?? 'n/a')) ?></small> </td> 
+            <td> <small><?= h($d['wifi_ssid'] ?: '—') ?></small> </td> 
+            <td> <small><?= h($d['battery_v'] !== null ? number_format((float)$d['battery_v'], 2) . 'V' : '—') ?></small> </td> 
+            <td> <small><?= h($d['last_seen'] ?: 'never') ?></small> </td> 
+            <td class="text-center"> 
+                <!-- Changed button text color to #000 and updated border color -->
+                <a class="btn btn-sm btn-outline-dark" href="<?= APP_BASE ?>/device.php?imei=<?= urlencode($d['imei']) ?>" style="border: 1px solid #000; color: #000;"> 
+                    <i class="fas fa-arrow-right me-1"></i>View 
+                </a> 
+            </td> 
+        </tr> 
+    <?php endforeach; ?> 
+</tbody>
+
     </table>
   </div>
 </div>
