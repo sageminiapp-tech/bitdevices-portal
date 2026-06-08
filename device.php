@@ -102,19 +102,19 @@ $updateAvailable = ($latestVersion && $device['fw_version'] && version_compare($
         </div>
         <div class="mb-2">
           <small class="text-secondary"><i class="fas fa-location-dot me-1"></i>Site</small>
-          <div><?= h($device['site'] ?: '—') ?></div>
+          <div style="background: rgba(0, 217, 255, 0.1); color: #00d9ff;"><?= h($device['site'] ?: '—') ?></div>
         </div>
         <div class="mb-2">
           <small class="text-secondary"><i class="fas fa-network-wired me-1"></i>IP</small>
-          <div><?= h($device['ip'] ?: '—') ?></div>
+          <div style="background: rgba(0, 217, 255, 0.1); color: #00d9ff;"><?= h($device['ip'] ?: '—') ?></div>
         </div>
         <div class="mb-2">
           <small class="text-secondary"><i class="fas fa-gear me-1"></i>Mode</small>
-          <div><?= h($device['mode'] ?: '—') ?></div>
+          <div style="background: rgba(0, 217, 255, 0.1); color: #00d9ff;"><?= h($device['mode'] ?: '—') ?></div>
         </div>
         <div class="mb-2">
           <small class="text-secondary"><i class="fas fa-clock me-1"></i>Last Seen</small>
-          <div><small><?= h($device['last_seen'] ?: 'Never') ?></small></div>
+          <div style="background: rgba(0, 217, 255, 0.1); color: #00d9ff;"><small><?= h($device['last_seen'] ?: 'Never') ?></small></div>
         </div>
       </div>
     </div>
@@ -125,11 +125,11 @@ $updateAvailable = ($latestVersion && $device['fw_version'] && version_compare($
         <h5 class="mb-3"><i class="fas fa-mobile-alt me-2"></i>GSM Network</h5>
         <div class="mb-2">
           <small class="text-secondary"><i class="fas fa-building me-1"></i>Operator</small>
-          <div><?= h($device['gsm_operator'] ?: '—') ?></div>
+          <div style="background: rgba(0, 217, 255, 0.1); color: #00d9ff;"><?= h($device['gsm_operator'] ?: '—') ?></div>
         </div>
         <div class="mb-2">
           <small class="text-secondary"><i class="fas fa-wifi me-1"></i>Network</small>
-          <div><?= h($device['gsm_network'] ?: '—') ?></div>
+          <div style="background: rgba(0, 217, 255, 0.1); color: #00d9ff;"><?= h($device['gsm_network'] ?: '—') ?></div>
         </div>
         <div class="mb-2">
           <small class="text-secondary"><i class="fas fa-signal me-1"></i>Signal Strength (RSSI)</small>
@@ -148,7 +148,7 @@ $updateAvailable = ($latestVersion && $device['fw_version'] && version_compare($
         <h5 class="mb-3"><i class="fas fa-battery-full me-2"></i>WiFi & Power</h5>
         <div class="mb-2">
           <small class="text-secondary"><i class="fas fa-wifi me-1"></i>SSID</small>
-          <div class="text-secondary"><?= h($device['wifi_ssid'] ?: '—') ?></div>
+          <div style="background: rgba(0, 217, 255, 0.1); color: #00d9ff;"><?= h($device['wifi_ssid'] ?: '—') ?></div>
         </div>
         <div class="mb-2">
           <small class="text-secondary"><i class="fas fa-flash me-1"></i>Battery Voltage</small>
