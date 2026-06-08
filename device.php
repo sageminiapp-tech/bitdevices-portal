@@ -148,7 +148,7 @@ $updateAvailable = ($latestVersion && $device['fw_version'] && version_compare($
         <h5 class="mb-3"><i class="fas fa-battery-full me-2"></i>WiFi & Power</h5>
         <div class="mb-2">
           <small class="text-secondary"><i class="fas fa-wifi me-1"></i>SSID</small>
-          <div><?= h($device['wifi_ssid'] ?: '—') ?></div>
+          <div class="text-secondary"><?= h($device['wifi_ssid'] ?: '—') ?></div>
         </div>
         <div class="mb-2">
           <small class="text-secondary"><i class="fas fa-flash me-1"></i>Battery Voltage</small>
