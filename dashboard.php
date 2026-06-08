@@ -132,7 +132,7 @@ $onlineCount = count(array_filter($devices, fn($d)=>is_device_online($d['last_se
       </thead>
       <tbody>
       <?php if (!$devices): ?>
-        <tr><td colspan="<?= is_admin() ? '12' : '11' ?>" class="text-center text-secondary py-5">
+        <tr><td colspan="<?= is_admin() ? '12' : '11' ?>" class="text-center text-primary py-5">
           <div><i class="fas fa-inbox fa-3x mb-3" style="opacity: 0.3;"></i></div>
           <div>No devices found.</div>
         </td></tr>
