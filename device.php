@@ -30,6 +30,15 @@ $latestVersion = latest_fw_version();
 $latestUrl = latest_fw_url();
 $updateAvailable = ($latestVersion && $device['fw_version'] && version_compare($device['fw_version'], $latestVersion, '<'));
 ?>
+<?php
+// Assume $device is already loaded from devices table
+$currentFw = trim((string)($device['fw_version'] ?? ''));
+$latestFw  = latest_fw_version() ?? '';
+
+$canUpdate = $latestFw !== ''
+    && $currentFw !== ''
+    && version_compare($latestFw, $currentFw, '>');
+?>
 <?php include __DIR__ . '/partials/header.php'; ?>
 <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
   <div>
@@ -74,21 +83,39 @@ $updateAvailable = ($latestVersion && $device['fw_version'] && version_compare($
       </div>
     </div>
   </div>
-  <div class="col-md-4">
+<div class="col-md-4">
     <div class="card stat-card shadow-sm border-0 h-100">
-      <div class="card-body">
-        <div class="d-flex align-items-center">
-          <div class="flex-grow-1">
-            <div class="text-secondary small mb-2"><i class="fas fa-cloud me-2"></i>Latest Firmware</div>
-            <div class="display-6" style="font-size: 1.8rem;"><?= h($latestVersion ?: 'n/a') ?></div>
-          </div>
-          <div style="font-size: 1.8rem; opacity: 0.1; margin-left: 1rem;">
-            <i class="fas fa-server"></i>
-          </div>
+        <div class="card-body d-flex flex-column justify-content-between">
+            <div class="d-flex align-items-center mb-3">
+                <div class="flex-grow-1">
+                    <div class="text-secondary small mb-2"><i class="fas fa-cloud me-2"></i>Latest Firmware</div>
+                    <div class="display-6" style="font-size: 1.8rem;"><?= h($latestVersion ?: 'n/a') ?></div>
+                </div>
+                <div style="font-size: 1.8rem; opacity: 0.1; margin-left: 1rem;">
+                    <i class="fas fa-server"></i>
+                </div>
+            </div>
+
+            <div class="mt-auto">
+                <form method="post" action="<?= APP_BASE ?>/request-update.php">
+                    <input type="hidden" name="device_id" value="<?= (int)$device['id'] ?>">
+                    <button type="submit" class="btn btn-primary w-100" <?= $canUpdate ? '' : 'disabled' ?> title="<?= $canUpdate ? 'Send OTA request to device' : 'Device is already up to date' ?>" >
+                        Update Device
+                    </button>
+                </form>
+
+                <?php if (isset($_GET['ota']) && $_GET['ota'] === 'queued'): ?>
+                    <p class="small text-success mt-2 mb-0">OTA request queued successfully.</p>
+                <?php endif; ?>
+
+                <?php if (isset($_GET['ota']) && $_GET['ota'] === 'up-to-date'): ?>
+                    <p class="small text-muted mt-2 mb-0">Device is already on the latest firmware.</p>
+                <?php endif; ?>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
+</div>
+
 </div>
 
 <div class="row g-3 mb-4">
