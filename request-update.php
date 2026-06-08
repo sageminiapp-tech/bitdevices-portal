@@ -1,8 +1,5 @@
 <?php
-require_once __DIR__ . '/auth.php';
-require_once __DIR__ . '/db.php';
-
-require_login();
+require_once __DIR___login();require_once __DIR__ . '/auth.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(405);
@@ -40,29 +37,23 @@ if ($currentFw !== '' && !version_compare($latestFw, $currentFw, '>')) {
     exit;
 }
 
-// avoid duplicate queued OTA commands
-$check = $pdo->prepare('
-    SELECT id FROM device_commands
-    WHERE device_id = ? AND command_type = "ota" AND status IN ("queued","sent")
-    ORDER BY id DESC
-    LIMIT 1
-');
-$check->execute([$deviceId]);
-$existing = $check->fetchColumn();
+$topic = 'devices/' . $device['imei'] . '/cmd';
 
-if (!$existing) {
-    $payload = json_encode([
-        'target_version' => $latestFw,
-        'bin_url'        => $latestUrl,
-        'requested_by'   => $_SESSION['username'] ?? 'unknown',
-    ], JSON_UNESCAPED_SLASHES);
+$payload = [
+    'action'         => 'ota',
+    'target_version' => $latestFw,
+    'bin_url'        => $latestUrl,
+    'requested_by'   => $_SESSION['username'] ?? 'unknown',
+];
 
-    $ins = $pdo->prepare('
-        INSERT INTO device_commands (device_id, command_type, payload_json, status)
-        VALUES (?, "ota", ?, "queued")
-    ');
-    $ins->execute([$deviceId, $payload]);
+try {
+    mqtt_publish($topic, $payload, 1, false);
+    header('Location: ' . APP_BASE . '/device.php?id=' . $deviceId . '&ota=queued');
+    exit;
+} catch (Throwable $e) {
+    error_log('MQTT publish failed: ' . $e->getMessage());
+    header('Location: ' . APP_BASE . '/device.php?id=' . $deviceId . '&ota=publish-failed');
+    exit;
 }
-
-header('Location: ' . APP_BASE . '/device.php?id=' . $deviceId . '&ota=queued');
-exit;
+require_once __DIR__ . '/db.php';
+require_once __DIR__ . '/mqtt.php';

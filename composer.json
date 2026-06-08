@@ -2,6 +2,7 @@
   "name": "bitdevices/portal",
   "description": "Device Registration Portal",
   "require": {
-    "php": "^8.2"
+    "php": "^8.2",
+    "php-mqtt/client": "^2.3"
   }
 }
