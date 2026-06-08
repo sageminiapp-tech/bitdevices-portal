@@ -12,7 +12,7 @@ define('APP_BASE', '');
 
 // Session & Device Settings
 define('PORTAL_SESSION_NAME', 'bitdevices_portal');
-define('DEVICE_ONLINE_SECONDS', 300);
+define('DEVICE_ONLINE_SECONDS', 86400);
 
 // API Key
 define('PORTAL_API_KEY', getenv('PORTAL_API_KEY') ?: 'change-me-in-production');
