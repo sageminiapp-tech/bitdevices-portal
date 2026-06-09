@@ -3,6 +3,7 @@
   "description": "Device Registration Portal",
   "require": {
     "php": "^8.2",
-    "php-mqtt/client": "^2.3"
+    "php-mqtt/client": "^2.3",
+    "mongodb/mongodb": "^2.1"
   }
 }
