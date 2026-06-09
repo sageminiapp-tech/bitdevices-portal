@@ -13,9 +13,6 @@ COPY . .
 COPY entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh
 
-COPY composer.json composer.lock ./
-RUN composer install --no-dev --optimize-autoloader
-
 # Expose port
 EXPOSE 8080
 
