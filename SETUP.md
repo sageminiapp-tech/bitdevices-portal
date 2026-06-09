@@ -32,7 +32,7 @@ define('DB_HOST', 'localhost');      // MySQL host
 define('DB_NAME', 'bitdev');         // Database name
 define('DB_USER', 'root');           // MySQL user
 define('DB_PASS', '');               // MySQL password
-define('PORTAL_API_KEY', '880610BitFluxApp');  // Must match ESP8266
+define('PORTAL_API_KEY', 'xxxxxxxxxxxx');  // Must match ESP8266
 ```
 
 ### 3. Test the Endpoint
@@ -49,10 +49,10 @@ Update these constants in your sketch:
 static const char* DEVICE_PORTAL_URL = "http://192.168.x.x/portal/devreg.php";
 
 // For internet access (HTTPS) - if you have SSL certificate
-static const char* DEVICE_PORTAL_URL = "https://your-domain.com/portal/devreg.php";
+static const char* DEVICE_PORTAL_URL = "https://bitdevices.up.railway.app/devreg.php";
 
 // Must match config.php PORTAL_API_KEY
-static const char* DEVICE_API_KEY = "880610BitFluxApp";
+static const char* DEVICE_API_KEY = "xxxxxxxxxxxxxxxx";
 ```
 
 ### Network Requirements
@@ -69,7 +69,7 @@ static const char* DEVICE_API_KEY = "880610BitFluxApp";
 **Headers:**
 ```
 Content-Type: application/json
-X-API-Key: 880610BitFluxApp
+X-API-Key: xxxxxxxxxxxxxxx
 ```
 
 **Request Body (JSON):**
