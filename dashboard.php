@@ -4,17 +4,28 @@ require_login();
 
 $q = trim($_GET['q'] ?? '');
 $params = [];
-$sql = 'SELECT * FROM devices';
+
+$sql = '
+    SELECT 
+        d.*,
+        COALESCE(NULLIF(u.display_name, \'\'), u.username, CONCAT(\'User #\', d.owner_user_id), \'unclaimed\') AS owner_display_name
+    FROM devices d
+    LEFT JOIN users u ON u.id = d.owner_user_id
+';
+
 $where = [];
 
 if (!is_admin()) {
-    $where[] = 'owner_user_id = ?';
+    $where[] = 'd.owner_user_id = ?';
     $params[] = (int)$_SESSION['uid'];
 }
 
 if ($q !== '') {
-    $where[] = '(imei LIKE ? OR chipid LIKE ? OR site LIKE ? OR wifi_ssid LIKE ?)';
+    $where[] = '(d.imei LIKE ? OR d.chipid LIKE ? OR d.site LIKE ? OR d.wifi_ssid LIKE ? OR u.display_name LIKE ? OR u.username LIKE ?)';
     $needle = '%' . $q . '%';
+
+    $params[] = $needle;
+    $params[] = $needle;
     $params[] = $needle;
     $params[] = $needle;
     $params[] = $needle;
@@ -25,7 +36,8 @@ if ($where) {
     $sql .= ' WHERE ' . implode(' AND ', $where);
 }
 
-$sql .= ' ORDER BY last_seen DESC';
+$sql .= ' ORDER BY d.last_seen DESC';
+
 $stmt = db()->prepare($sql);
 $stmt->execute($params);
 $devices = $stmt->fetchAll();
@@ -151,7 +163,9 @@ $onlineCount = count(array_filter($devices, fn($d)=>is_device_online($d['last_se
             <td><code style="color: #000;"><?= h($d['imei']) ?></code></td> 
             <td><code style="color: #000;"><?= h($d['iccid']) ?></code></td> 
             <td><code style="color: #000;"><?= h($d['chipid']) ?></code></td> 
-            <?php if (is_admin()): ?><td><?= h((string)($d['owner_user_id'] ?? 'unclaimed')) ?></td><?php endif; ?> 
+            <?php if (is_admin()): ?>
+    <td><?= h((string)($d['owner_display_name'] ?? 'unclaimed')) ?></td>
+<?php endif; ?>
             <td> 
                 <!-- Changed badge text color to #000 -->
                 <span class="badge rounded-pill <?= $online ? 'badge-online' : 'badge-offline' ?>" style="<?= $online ? 'background: linear-gradient(135deg, #00d9ff, #00a8cc); color: #000;' : 'background: linear-gradient(135deg, #ec4899, #be185d); color: #000;' ?>"> 
