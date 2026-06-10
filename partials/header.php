@@ -260,7 +260,7 @@
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark shadow-none">
-  <div class="container">
+  <div class="container-fluid">
     <a class="navbar-brand" href="<?= APP_BASE ?>/dashboard.php">
       <i class="fas fa-microchip me-2"></i><?= h(APP_NAME) ?>
     </a>
